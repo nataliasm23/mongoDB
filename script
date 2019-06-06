@@ -1,0 +1,56 @@
+>Exercicios para Praticar
+
+1. Exiba todos os documentos da coleÃ§Ã£o restaurants.
+db.restaurante.find()
+
+2. Exiba os campos restaurant_id, name, borough e cuisine para todos os documentos da coleÃ§Ã£o restaurants.
+db.restaurante.find( {}, { "restaurante_id":1, "name":1, "borough":1,"cuisine":1})
+
+3. Exiba os campos restaurant_id, name, borough e cuisine, mas exclua o campo _id para todos os documentos da coleÃ§Ã£o restaurants
+db.restaurante.find( {}, { "restaurante_id":1, "name":1, "borough":1,"cuisine":1, "_id":0})
+
+4. Exiba os campos restaurant_id, name, borough e zip code, mas exclua o campo _id.
+db.restaurante.find( {}, { "restaurante_id":1, "name":1, "borough":1,"cuisine":1,"address.zipcode":1 "_id":0})
+
+5. Exiba todo o restaurante que estÃ£o no bairro Bronx. 
+> db.restaurante.find( {"borough":"Bronx"}, { "restaurante_id":1, "name":1, "borough":1, "_id":0})
+
+6. Exiba os primeiros 5 restaurantes que estÃ£o no bairro Bronx.
+> db.restaurante.find( {"borough":"Bronx"}, { "restaurante_id":1, "name":1, "borough":1, "_id":0}).limit(5)
+
+7. Exiba os prÃ³ximos 5 restaurantes depois de pular 5 primeiros que estÃ£o no bairro Bronx. 
+> db.restaurante.find( {"borough":"Bronx"}, { "restaurante_id":1, "name":1, "borough":1, "_id":0}).skip(5).limit(5)
+
+8. FaÃ§a uma query para encontrar os restaurantes que obtiveram uma pontuaÃ§Ã£o superior a 90. 
+ db.restaurante.find( {grades:{$elemMatch:{"score":{$gt:90}}}}, { "restaurante_id":1, "name":1, "borough":1, "_id":0})
+
+9. FaÃ§a uma query para encontrar os restaurantes que obtiveram uma pontuaÃ§Ã£o, mais de 80, mas menos de 100. 
+ db.restaurante.find(
+ {grades:{$elemMatch:{"score":{$gt:90, $lt:100}}}},
+ { "restaurante_id":1, 
+   "name":1,
+   "borough":1, 
+   "_id":0}
+   )
+10. FaÃ§a uma query para encontrar os restaurantes que localizam em latitude menor que -95.754168.
+db.restaurante.find(
+ {grades:{$elemMatch:{"score":{$gt:90, $lt:100}}}},
+ { "restaurante_id":1, 
+   "name":1,
+   "borough":1, 
+   "_id":0}
+   )
+
+db.restaurantes.find ({"address.coord": { $lt: -95.754168 }})
+ou 
+db.restaurant.find ({"address.coord": { $lt: -95.754168 }}, {"name":1})
+
+11. FaÃ§a uma query para encontrar os restaurantes que nÃ£o preparam qualquer culinÃ¡ria  'americano' e sua pontuaÃ§Ã£o de nota superior a 70 e latitude menor que -65.754168.
+db.Restaurantes.find ({"address.coord.0": { $lt: -65.754168 }
+    				  ,"cuisine": {$ne: "American "}
+    				  ,	grades: {$elemMatch: {"score": { $gt: 70 }}}
+				 	  }
+						)
+12. Faça uma query para encontrar os restaurantes que não preparam qualquer cozinha de 'americano' e alcanÃ§aram uma pontuaÃ§Ã£o superior a 70 e localizado na longitude inferior a -65.754168.
+db.Restaurantes.find ({"address.coord.1": { $lt: -65.754168 },"cuisine": {$ne: "American "},grades: {$elemMatch: {"score": { $gt: 70 }}} } )
+
